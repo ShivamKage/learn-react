@@ -4956,7 +4956,7 @@ const RestroCard = ({ cloudinaryImageId , name , cuisines , lastMileTravel  })=>
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
                 children: [
                     lastMileTravel,
-                    " kms"
+                    " minutes"
                 ]
             }, void 0, true, {
                 fileName: "App.js",

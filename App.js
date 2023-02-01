@@ -1904,7 +1904,7 @@ const RestroCard = ({ cloudinaryImageId, name, cuisines, lastMileTravel }) => {
       />
       <h2>{name}</h2>
       <h3>{cuisines.join(",")}</h3>
-      <h4>{lastMileTravel} kms</h4>
+      <h4>{lastMileTravel} minutes</h4>
     </div>
   );
 };
