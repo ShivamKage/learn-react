@@ -16,7 +16,7 @@
   display: flex;
 }
 
-.nav-items > ul > li {
+.nav-items > ul > li, .nav-items > ul > a {
   padding: 10px;
 }
 
@@ -37,6 +37,17 @@
 
 .resturant-list {
   flex-wrap: wrap;
+  display: flex;
+}
+
+.shimmer-card {
+  height: 200px;
+  width: 200px;
+  background-color: #d3d3d3;
+  margin: 2px;
+}
+
+.menu {
   display: flex;
 }
 

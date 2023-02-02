@@ -1,9 +1,12 @@
-import ResturantCard from "./ResturantCard";
-
-const Shimmer = () =>{
-    return(
-        <h1>Shimmer, Data loading.....</h1>
-        
-    )
-}
+const Shimmer = () => {
+  return (
+    <div className="resturant-list">
+      {Array(10)
+        .fill(" ")
+        .map((e, index) => (
+          <div key={index} className="shimmer-card"></div>
+        ))}
+    </div>
+  );
+};
 export default Shimmer;

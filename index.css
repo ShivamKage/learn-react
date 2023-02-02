@@ -16,6 +16,10 @@
 .nav-items > ul > li {
   padding: 10px;
 }
+.nav-items > ul > a {
+  padding: 10px;
+}
+
 .card {
   width: 200px;
   border: 1px solid black;
@@ -28,7 +32,18 @@
 .card > img {
   width: 100%;
 }
+
 .resturant-list {
   display: flex;
   flex-wrap: wrap;
+}
+.shimmer-card {
+  height: 200px;
+  width: 200px;
+  background-color: lightgray;
+  margin: 2px;
+}
+
+.menu{
+  display: flex;
 }
