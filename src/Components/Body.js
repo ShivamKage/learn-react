@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ResturantCard from "./ResturantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import { ALL_RESTURANT_URL } from "../Constants";
+import UserContext from "../Utilies/UserContext";
 
 const filterData = (resturants, searchText) => {
   const data = resturants.filter((resturant) =>
@@ -11,30 +13,32 @@ const filterData = (resturants, searchText) => {
 };
 
 const Body = () => {
+  const { user, setUser } = useContext(UserContext);
   const [allResturants, setAllResturants] = useState([]);
   const [filteredResturants, setFilteredResturants] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
   useEffect(() => {
     getResturant();
   }, []);
-
   async function getResturant() {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.3397809&lng=76.3868797&page_type=DESKTOP_WEB_LISTING"
-    );
+    const data = await fetch(ALL_RESTURANT_URL);
     const json = await data.json();
     setAllResturants(json?.data?.cards[2]?.data?.data?.cards);
+    console.log(json);
     setFilteredResturants(json?.data?.cards[2]?.data?.data?.cards);
   }
-  if (!allResturants) return null;
   return allResturants.length === 0 ? (
-    <Shimmer />
+    <>
+      <Shimmer />
+    </>
   ) : (
     <>
-      <div className="search-container">
+      <div className="bg-pink-100 p-2 m-2">
         <input
           type="text"
-          className="search-input"
           placeholder="Search"
           value={searchText}
           onChange={(e) => {
@@ -42,7 +46,7 @@ const Body = () => {
           }}
         ></input>
         <button
-          className="search-btn"
+          className="bg-cyan-300 ml-2 hover:bg-sky-400"
           onClick={() => {
             const data = filterData(allResturants, searchText);
             setFilteredResturants(data);
@@ -50,9 +54,31 @@ const Body = () => {
         >
           Search
         </button>
+        <input
+          className="ml-3"
+          placeholder="Name"
+          onChange={(e) => setUserName(e.target.value)}
+        ></input>
+        <button
+          className="bg-cyan-300 ml-2 hover:bg-sky-400"
+          onClick={() => setUser({ ...user, name: userName })}
+        >
+          Update Name
+        </button>
+        <input
+          className="ml-3"
+          placeholder="Email"
+          onChange={(e) => setUserEmail(e.target.value)}
+        ></input>
+        <button
+          className="bg-cyan-300 ml-2 hover:bg-sky-400"
+          onClick={() => setUser({ ...user, email: userEmail })}
+        >
+          Update Email
+        </button>
       </div>
-      <div className="resturant-list">
-        {filteredResturants.length === 0 ? (
+      <div className="flex flex-wrap">
+        {!filteredResturants.length === 0 ? (
           <h1>No Resturant Found !!!!!</h1>
         ) : (
           filteredResturants.map((resturantList) => (

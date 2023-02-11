@@ -1,34 +1,36 @@
 {
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@parcel/transformer-posthtml": "^2.8.3",
+    "parcel": "^2.8.3",
+    "postcss": "^8.4.21",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.2.4"
+  },
   "name": "learn-react",
   "version": "1.0.0",
-  "description": "learn react",
+  "main": "index.js",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ShivamKage/learn-react.git"
   },
-  "author": "Shivam Garg",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ShivamKage/learn-react/issues"
   },
   "homepage": "https://github.com/ShivamKage/learn-react#readme",
-  "devDependencies": {
-    "@babel/core": "^7.20.12",
-    "babel-plugin-transform-remove-console": "^6.9.4",
-    "parcel": "^2.8.3",
-    "process": "^0.11.10"
-  },
+  "description": "",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.0"
-  },
-  "browserslist": [
-    "last 2 Chrome versions"
-  ]
+  }
 }

@@ -1,40 +1,43 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Components/Shimmer";
-import { IMG_CDN_URL } from "./Constants";
+import { IMG_CDN_URL, RESTURANT_LIST_URL } from "./Constants";
+import useResturant from "./Utilies/useResturant";
+import { addItem } from "./Utilies/cartSlice";
+import { useDispatch } from "react-redux";
 
 const ResturantList = () => {
   const parms = useParams();
-  const [restaurant, setResturant] = useState(null);
-  useEffect(() => {
-    getResturantList();
-  }, []);
-  async function getResturantList() {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/menu/v4/full?lat=30.3397809&lng=76.3868797&menuId=" +
-        parms.id
-    );
-    const json = await data.json();
-    setResturant(json);
-  }
+  const restaurant = useResturant(RESTURANT_LIST_URL + parms.RestroId);
+  const dispatch = useDispatch();
+  const addToCart = (item) => {
+    dispatch(addItem(item));
+  };
   return !restaurant ? (
     <Shimmer />
   ) : (
-    <div className="menu">
-      <div className="card">
-        <h1>Id:{parms.id}</h1>
+    <div className="ml-8 flex">
+      <div className="mt-6">
+        <h1 className="text-4xl">Id:{parms.RestroId}</h1>
         <img
-          className="img"
+          className="w-52"
           alt="loading "
           src={IMG_CDN_URL + restaurant?.data?.cloudinaryImageId}
         ></img>
         <h3>Name: {restaurant?.data?.name}</h3>
         <h3>Rating: {restaurant?.data?.avgRating} star</h3>
       </div>
-      <div>
-        <h1>Menu</h1>
+      <div className="m-6">
+        <h1 className="text-4xl">Menu</h1>
         {Object.values(restaurant?.data?.menu?.items).map((items) => (
-          <li key={items.id}>{items.name}</li>
+          <div key={items.id} className="flex">
+            <li>{items.name}</li>
+            <button
+              className="ml-4 bg-cyan-300 hover:bg-sky-400"
+              onClick={() => addToCart(items)}
+            >
+              Add
+            </button>
+          </div>
         ))}
       </div>
     </div>

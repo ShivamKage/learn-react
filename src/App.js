@@ -1,21 +1,40 @@
-import React, { Children } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./Components/Header";
 import Body from "./Components/Body";
 import Footer from "./Components/Footer";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import About from "./Components/About";
-import Error from "./Components/Error";
 import Contact from "./Components/Contact";
+import Error from "./Components/Error";
 import ResturantList from "./ResturantList";
+import Profile from "./Profile";
+import Shimmer from "./Components/Shimmer";
+import Instamart from "./Components/Instamart";
+import UserContext from "./Utilies/UserContext";
+import Login from "./Components/Login";
+import Cart from "./Components/Cart";
+import { Provider } from "react-redux";
+import store from "./Utilies/store";
+
+const About = lazy(() => import("./Components/About"));
 
 const AppLayout = () => {
-  return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
+  const [user, setUser] = useState({
+    name: "Shivam",
+    email: "shivi29garg@gmail.com",
+  });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  return !isLoggedIn ? (
+    <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+  ) : (
+    <Provider store={store}>
+      <UserContext.Provider value={{ user: user, setUser: setUser }}>
+        <Header />
+        <Outlet />
+        <Footer />
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -31,14 +50,32 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <About />
+          </Suspense>
+        ),
+        children: [
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+        ],
       },
       {
         path: "/contact",
         element: <Contact />,
       },
       {
-        path: "/resturant/:id",
+        path: "/Instamart",
+        element: <Instamart />,
+      },
+      {
+        path: "/Cart",
+        element: <Cart />,
+      },
+      {
+        path: "/resturant/:RestroId",
         element: <ResturantList />,
       },
     ],
